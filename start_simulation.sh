@@ -12,14 +12,14 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-colcon build --symlink-install --allow-overriding communication_interfaces launch_turtlebot_gazebo ros2swarm&&
- source ./install/setup.bash &&
+colcon build --symlink-install --packages-select communication_interfaces launch_turtlebot_gazebo ros2swarm&&
+ source /workspaces/Senior_Thesis/install/setup.sh &&
  ROS_DOMAIN_ID=42 ros2 launch launch_turtlebot_gazebo create_enviroment.launch.py \
  gazebo_world:=arena_large.world \
- pattern:=aggregation_pattern \
+ pattern:=dispersion_pattern \
  number_robots:=9 \
  log_level:=info \
- robot:=waffle_pi
+ robot:=burger
 # gazebo_world arena_large.world | arena.world | empty.world | turtle.world | 560x540m.world | Ymaze.world | Ymaze_camber.world | Ymaze_camber_top.world
 # pattern pattern_name
 ## movement pattern:

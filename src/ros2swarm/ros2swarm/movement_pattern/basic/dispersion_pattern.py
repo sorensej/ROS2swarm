@@ -22,6 +22,8 @@ from ros2swarm.movement_pattern.movement_pattern import MovementPattern
 from ros2swarm.utils.scan_calculation_functions import ScanCalculationFunctions
 from communication_interfaces.msg import DoubleMessage
 
+from rclpy.parameter import Parameter
+
 
 class DispersionPattern(MovementPattern):
     """
@@ -37,15 +39,26 @@ class DispersionPattern(MovementPattern):
         super().__init__('dispersion_pattern')
         self.declare_parameters(
             namespace='',
+            # parameters=[
+            #     ('dispersion_max_range', None),
+            #     ('dispersion_min_range', None),
+            #     ('dispersion_front_attraction', None),
+            #     ('dispersion_threshold', None),
+            #     ('dispersion_stop_if_alone', None),
+            #     ('dispersion_allow_dynamic_max_range_setting', False),
+            #     ('max_translational_velocity', None),
+            #     ('max_rotational_velocity', None),
+            #     ('lidar_config', None)
+            # ])
             parameters=[
-                ('dispersion_max_range', None),
-                ('dispersion_min_range', None),
-                ('dispersion_front_attraction', None),
-                ('dispersion_threshold', None),
-                ('dispersion_stop_if_alone', None),
-                ('dispersion_allow_dynamic_max_range_setting', False),
-                ('max_translational_velocity', None),
-                ('max_rotational_velocity', None),
+                ('dispersion_max_range', Parameter.Type.DOUBLE),
+                ('dispersion_min_range', Parameter.Type.DOUBLE),
+                ('dispersion_front_attraction', Parameter.Type.DOUBLE),
+                ('dispersion_threshold', Parameter.Type.INTEGER),
+                ('dispersion_stop_if_alone', Parameter.Type.BOOL),
+                ('dispersion_allow_dynamic_max_range_setting', Parameter.Type.BOOL),
+                ('max_translational_velocity', Parameter.Type.DOUBLE),
+                ('max_rotational_velocity', Parameter.Type.DOUBLE),
                 ('lidar_config', None)
             ])
 
@@ -62,7 +75,7 @@ class DispersionPattern(MovementPattern):
             self.max_range_callback,
             10
         )
-
+        
         self.param_max_range = float(
             self.get_parameter("dispersion_max_range").get_parameter_value().double_value)
         self.param_min_range = self.get_parameter(
@@ -73,16 +86,17 @@ class DispersionPattern(MovementPattern):
             "dispersion_threshold").get_parameter_value().integer_value
         self.param_stop_if_alone = self.get_parameter(
             "dispersion_stop_if_alone").get_parameter_value().bool_value
-        self.param_allow_dynamic_max_range_setting = self.get_parameter(
-            "dispersion_allow_dynamic_max_range_setting").get_parameter_value().bool_value
+        # self.param_allow_dynamic_max_range_setting = self.get_parameter(
+        #     "dispersion_allow_dynamic_max_range_setting").get_parameter_value().bool_value
         self.param_max_translational_velocity = self.get_parameter(
             "max_translational_velocity").get_parameter_value().double_value
         self.param_max_rotational_velocity = self.get_parameter(
             "max_rotational_velocity").get_parameter_value().double_value
         # TODO replace magic number '3'
-        self.lidar_config = self.get_parameter(
-            "lidar_config").get_parameter_value().double_value if self.get_parameter(
-            "lidar_config").get_parameter_value().type == 3 else None
+        self.lidar_config = None
+        # self.lidar_config = self.get_parameter(
+        #     "lidar_config").get_parameter_value().double_value if self.get_parameter(
+        #     "lidar_config").get_parameter_value().type == 3 else None
 
     def scan_callback(self, incoming_msg):
         """Call back if a new scan msg is available."""

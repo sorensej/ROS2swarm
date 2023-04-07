@@ -22,6 +22,9 @@ from rclpy.qos import qos_profile_sensor_data
 from ros2swarm.utils.scan_calculation_functions import ScanCalculationFunctions
 
 
+from rclpy.parameter import Parameter
+
+
 class HardwareProtectionLayer(AbstractPattern):
     """
     Protects the robot from crashing into obstacles.
@@ -39,13 +42,22 @@ class HardwareProtectionLayer(AbstractPattern):
 
         self.declare_parameters(
             namespace='',
+            # parameters=[
+            #     ('hardware_protection_layer_max_range', None),
+            #     ('hardware_protection_layer_min_range', None),
+            #     ('hardware_protection_layer_front_attraction', None),
+            #     ('hardware_protection_layer_threshold', None),
+            #     ('max_translational_velocity', None),
+            #     ('max_rotational_velocity', None),
+            #     ('lidar_config', None)
+            # ])
             parameters=[
-                ('hardware_protection_layer_max_range', None),
-                ('hardware_protection_layer_min_range', None),
-                ('hardware_protection_layer_front_attraction', None),
-                ('hardware_protection_layer_threshold', None),
-                ('max_translational_velocity', None),
-                ('max_rotational_velocity', None),
+                ('hardware_protection_layer_max_range', Parameter.Type.DOUBLE),
+                ('hardware_protection_layer_min_range', Parameter.Type.DOUBLE),
+                ('hardware_protection_layer_front_attraction', Parameter.Type.DOUBLE),
+                ('hardware_protection_layer_threshold', Parameter.Type.INTEGER),
+                ('max_translational_velocity', Parameter.Type.DOUBLE),
+                ('max_rotational_velocity', Parameter.Type.DOUBLE),
                 ('lidar_config', None)
             ])
 
@@ -63,8 +75,7 @@ class HardwareProtectionLayer(AbstractPattern):
             qos_profile=qos_profile_sensor_data
         )
 
-        self.publisher_cmd_vel = self.create_publisher(Twist, self.get_namespace() + '/cmd_vel',
-                                                       10)
+        self.publisher_cmd_vel = self.create_publisher(Twist, self.get_namespace() + '/cmd_vel', 10)
 
         self.param_max_range = float(self.get_parameter(
             "hardware_protection_layer_max_range").get_parameter_value().double_value)
@@ -79,9 +90,10 @@ class HardwareProtectionLayer(AbstractPattern):
         self.param_max_rotational_velocity = self.get_parameter(
             "max_rotational_velocity").get_parameter_value().double_value
         # TODO replace magic number '3'
-        self.lidar_config = self.get_parameter(
-            "lidar_config").get_parameter_value().double_value if self.get_parameter(
-            "lidar_config").get_parameter_value().type == 3 else None
+        self.lidar_config = None
+        # self.lidar_config = self.get_parameter(
+        #     "lidar_config").get_parameter_value().double_value if self.get_parameter(
+        #     "lidar_config").get_parameter_value().type == 3 else None
 
     def destroy_node(self):
         """Send a stop twist message and calls the super destroy method."""

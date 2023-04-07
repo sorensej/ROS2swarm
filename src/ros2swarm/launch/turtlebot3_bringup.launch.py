@@ -31,10 +31,10 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    robot_type = LaunchConfiguration("robot", default='robot_type_default')
+    robot_type = LaunchConfiguration("robot", default='burger')
     usb_port = LaunchConfiguration('usb_port', default='/dev/ttyACM0')
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    turtle_namespace = LaunchConfiguration('turtle_namespace', default='robot_namespace_NOT_SET')
+    turtle_namespace = LaunchConfiguration('turtle_namespace', default='robot_namespace_0')
 
     tb3_param_dir = LaunchConfiguration(
         'tb3_param_dir',

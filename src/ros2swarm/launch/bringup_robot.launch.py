@@ -51,7 +51,7 @@ def generate_launch_description():
         elif arg.startswith("robot:="):  # The type of robot
             robot = arg.split(":=")[1]
         else:
-            if arg not in ['/opt/ros/foxy/bin/ros2',
+            if arg not in ['/opt/ros/humble',
                            'launch',
                            'ros2swarm',
                            'launch_turtlebot_gazebo',
