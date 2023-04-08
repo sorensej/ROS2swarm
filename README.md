@@ -26,8 +26,8 @@ The ICRA 2022 paper "ROS2swarm - A ROS 2 Package for Swarm Robot Behaviors" refe
 - [Using the modified TurtleBot3 models](#modified-models)
 
 ROS2swarm is available for the ROS 2 Versions 
-[Dashing (dashing-dev)](https://gitlab.iti.uni-luebeck.de/ROS2/ros2swarm/-/tree/dashing-dev) and 
-[Foxy (foxy-dev)](https://gitlab.iti.uni-luebeck.de/ROS2/ros2swarm/-/tree/foxy-dev). 
+[Dashing (dashing-dev)](https://github.com/ROS2swarm/ROS2swarm/tree/dashing-dev) and 
+[Foxy (foxy-dev)](https://github.com/ROS2swarm/ROS2swarm/tree/foxy-dev). 
 
 The swarm behavior pattern consists of movement and voting 
 based [patterns](#existing-patterns). 
@@ -188,7 +188,7 @@ cd ~/turtlebot3_ws && colcon build --symlink-install
 ```
 3) use robot selection parameter in start_*.sh 
 ```
-number_robots:=waffle_pi_led
+robots:=waffle_pi_led
 ```
 
 #### TurtleBot3 with no sensor visualisation in Gazebo
@@ -216,7 +216,7 @@ cd ~/turtlebot3_ws && colcon build --symlink-install
 ```
 4) use robot selection parameter in start_*.sh 
 ```
-number_robots:=waffle_pi_invisible_sensors
+robots:=waffle_pi_invisible_sensors
 ```
 5)
 ```
