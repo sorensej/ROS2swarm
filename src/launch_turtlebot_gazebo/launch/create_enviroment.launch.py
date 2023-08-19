@@ -15,6 +15,8 @@
 import os
 import sys
 import launch_ros.actions
+import math
+import random
 
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
@@ -87,32 +89,78 @@ def generate_launch_description():
     ])
     ld.add_action(log)
 
+    # if gazebo_flag:
+    #     # Add gazebo start script
+    #     gazebo_start = IncludeLaunchDescription(
+    #         PythonLaunchDescriptionSource([launch_file_dir, '/start_gazebo.launch.py']),
+    #         launch_arguments={'world_name': world_file_name}.items(),
+    #     )
+    #     ld.add_action(gazebo_start)
+    #     k = 0
+    #     for i in range(math.ceil(math.sqrt(number_robots))):
+    #         for j in range(math.ceil(math.sqrt(number_robots))):
+    #             if k+1>=number_robots:
+    #                 # add gazebo node
+    #                 gazebo_node = launch_ros.actions.Node(
+    #                     package='launch_turtlebot_gazebo',
+    #                     executable='add_bot_node',
+    #                     namespace=['namespace_', str(k)],
+    #                     name=['gazeboTurtleBotNode_', str(k)],
+    #                     output='screen',
+    #                     arguments=[
+    #                         '--robot_name', ['robot_name_', str(k)],
+    #                         '--robot_namespace', ['robot_namespace_', str(k)],
+    #                         '-x', [str(j), '.0'],
+    #                         '-y', [str(i), '.0'],
+    #                         '-z', '0.1',
+    #                         '--type_of_robot', robot
+    #                     ]
+    #                 )
+    #                 ld.add_action(gazebo_node)
+    #                 k+=1
     if gazebo_flag:
-        # Add gazebo start script
+    # Add gazebo start script
         gazebo_start = IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([launch_file_dir, '/start_gazebo.launch.py']),
-            launch_arguments={'world_name': world_file_name}.items(),
-        )
-        ld.add_action(gazebo_start)
-
-        for i in range(number_robots):
-            # add gazebo node
-            gazebo_node = launch_ros.actions.Node(
+        PythonLaunchDescriptionSource([launch_file_dir, '/start_gazebo.launch.py']),
+        launch_arguments={'world_name': world_file_name}.items(),
+    )
+    ld.add_action(gazebo_start)
+    # Launch the nest node
+    gazebo_node = launch_ros.actions.Node(
                 package='launch_turtlebot_gazebo',
                 executable='add_bot_node',
-                namespace=['namespace_', str(i)],
-                name=['gazeboTurtleBotNode_', str(i)],
+                namespace=['namespace_', 'nest'],
+                name=['gazeboTurtleBotNode_', 'nest'],
                 output='screen',
                 arguments=[
-                    '--robot_name', ['robot_name_', str(i)],
-                    '--robot_namespace', ['robot_namespace_', str(i)],
-                    '-x', '0.0',
-                    '-y', [str(i), '.0'],
+                    '--robot_name', ['robot_name_', 'nest'],
+                    '--robot_namespace', ['robot_namespace_', 'nest'],
+                    '-x', ['0.0'],
+                    '-y', ['0.0'],
                     '-z', '0.1',
                     '--type_of_robot', robot
                 ]
             )
-            ld.add_action(gazebo_node)
+    ld.add_action(gazebo_node)
+    for i in range(number_robots):
+        # add gazebo node
+        gazebo_node = launch_ros.actions.Node(
+            package='launch_turtlebot_gazebo',
+            executable='add_bot_node',
+            namespace=['namespace_', str(i)],
+            name=['gazeboTurtleBotNode_', str(i)],
+            output='screen',
+            arguments=[
+                '--robot_name', ['robot_name_', str(i)],
+                '--robot_namespace', ['robot_namespace_', str(i)],
+                '-x', [str(random.randrange(-math.ceil(math.sqrt(number_robots)), math.ceil(math.sqrt(number_robots))))],
+                '-y', [str(random.randrange(-math.ceil(math.sqrt(number_robots)), math.ceil(math.sqrt(number_robots))))],
+                '-z', '0.1',
+                '--type_of_robot', robot
+            ]
+        )
+        ld.add_action(gazebo_node)
+
 
     config_dir = os.path.join(get_package_share_directory('ros2swarm'), 'config', robot_type)
 

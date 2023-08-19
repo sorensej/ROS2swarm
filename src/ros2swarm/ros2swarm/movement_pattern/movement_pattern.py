@@ -13,6 +13,7 @@
 #    limitations under the License.
 from geometry_msgs.msg import Twist
 from ros2swarm.abstract_pattern import AbstractPattern
+import re
 
 
 class MovementPattern(AbstractPattern):
@@ -37,3 +38,10 @@ class MovementPattern(AbstractPattern):
         """Send a stop twist message and calls the super destroy method."""
         self.command_publisher.publish(Twist())
         super().destroy_node()
+
+    def get_robot_id(self):
+        # get robot id
+        matching_pattern = r"(robot_namespace_)(\d+)"  # r means raw string
+        p = re.compile(matching_pattern)
+        m = p.search(str(self.get_namespace()))
+        return int(m.group(2))

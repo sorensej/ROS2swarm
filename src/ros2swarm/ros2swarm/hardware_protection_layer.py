@@ -90,10 +90,10 @@ class HardwareProtectionLayer(AbstractPattern):
         self.param_max_rotational_velocity = self.get_parameter(
             "max_rotational_velocity").get_parameter_value().double_value
         # TODO replace magic number '3'
-        self.lidar_config = None
-        # self.lidar_config = self.get_parameter(
-        #     "lidar_config").get_parameter_value().double_value if self.get_parameter(
-        #     "lidar_config").get_parameter_value().type == 3 else None
+        #self.lidar_config = None
+        self.lidar_config = self.get_parameter(
+            "lidar_config").get_parameter_value().double_value if self.get_parameter(
+            "lidar_config").get_parameter_value().type == 3 else None
 
     def destroy_node(self):
         """Send a stop twist message and calls the super destroy method."""

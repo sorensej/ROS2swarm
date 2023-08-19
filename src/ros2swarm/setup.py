@@ -95,6 +95,8 @@ setup(
             'ros2swarm.movement_pattern.basic.magnetometer_pattern:main',
             'random_walk_pattern = '
             'ros2swarm.movement_pattern.basic.random_walk_pattern:main', 
+            'chain_search_pattern = '
+            'ros2swarm.movement_pattern.basic.chain_search_pattern:main',
             'minimalist_flocking_pattern = '
             'ros2swarm.movement_pattern.basic.minimalist_flocking_pattern:main',
             'rat_search_pattern = '

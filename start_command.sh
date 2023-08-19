@@ -12,12 +12,9 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-while true
-do
-        ROS_DOMAIN_ID=42 ros2 topic pub --once /swarm_command communication_interfaces/msg/Int8Message "{data: 1}"
-done
+# while true
+# do
+#         ROS_DOMAIN_ID=42 ros2 topic pub --once /swarm_command communication_interfaces/msg/Int8Message "{data: 1}"
 ROS_DOMAIN_ID=42 ros2 topic pub --once /swarm_command communication_interfaces/msg/Int8Message "{data: 1}"
-ROS_DOMAIN_ID=42 ros2 topic pub --once /swarm_command communication_interfaces/msg/Int8Message "{data: 1}"
-ROS_DOMAIN_ID=42 ros2 topic pub --once /swarm_command communication_interfaces/msg/Int8Message "{data: 1}"
-ROS_DOMAIN_ID=42 ros2 topic pub --once /swarm_command communication_interfaces/msg/Int8Message "{data: 1}"
+# done
 

@@ -17,6 +17,8 @@ from geometry_msgs.msg import Twist
 import random
 from ros2swarm.movement_pattern.movement_pattern import MovementPattern
 from ros2swarm.utils import setup_node
+from rclpy.parameter import Parameter
+
 
 
 class RandomWalkPattern(MovementPattern):
@@ -27,12 +29,12 @@ class RandomWalkPattern(MovementPattern):
         self.declare_parameters(
             namespace='',
             parameters=[
-                ('random_walk_linear', None),
-                ('random_walk_angular', None),
-                ('random_walk_timer_period', None),
-                ('random_walk_rot_interval', None),
-                ('random_walk_lin_interval_min', None),
-                ('random_walk_lin_interval_max', None)
+                ('random_walk_linear', Parameter.DOUBLE),
+                ('random_walk_angular', Parameter.DOUBLE),
+                ('random_walk_timer_period', Parameter.DOUBLE),
+                ('random_walk_rot_interval', Parameter.DOUBLE),
+                ('random_walk_lin_interval_min', Parameter.DOUBLE),
+                ('random_walk_lin_interval_max', Parameter.DOUBLE)
             ])
 
         self.walk = self.create_timer(5, self.swarm_command_controlled_timer(self.random))

@@ -46,7 +46,7 @@ def main():
                         help='the y component of the initial position [meters]')
     parser.add_argument('-z', type=float, default=0,
                         help='the z component of the initial position [meters]')
-    parser.add_argument('-t', '--type_of_robot', type=str, default='waffle_pi',
+    parser.add_argument('-t', '--type_of_robot', type=str, default='burger',
                         help='the type of robot')
 
     args, unknown = parser.parse_known_args()

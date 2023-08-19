@@ -33,7 +33,7 @@ def generate_launch_description():
     turtle_namespace = LaunchConfiguration('turtle_namespace', default='robot_namespace_NOT_SET')
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     parser = argparse.ArgumentParser(description='Environment settings')
-    parser.add_argument('-r', '--robot', type=str, default='waffle_pi',
+    parser.add_argument('-r', '--robot', type=str, default='burger',
                         help='The type of robot')
     args, unknown = parser.parse_known_args()
     robot = args.robot

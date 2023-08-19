@@ -43,7 +43,7 @@ def generate_launch_description():
         elif arg.startswith("version:="):  # ROS version used
             version = int(arg.split(":=")[1])
         else:
-            if arg not in ['/opt/ros/foxy/bin/ros2',
+            if arg not in ['/opt/ros/humble',
                            'launch',
                            'launch_turtlebot_gazebo',
                            'add_turtlebot.launch.py']:

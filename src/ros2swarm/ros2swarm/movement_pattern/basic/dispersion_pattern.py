@@ -18,7 +18,7 @@ from ros2swarm.utils import setup_node
 from sensor_msgs.msg import LaserScan
 from rclpy.qos import qos_profile_sensor_data
 from ros2swarm.movement_pattern.movement_pattern import MovementPattern
-
+from rcl_interfaces.msg import ParameterDescriptor
 from ros2swarm.utils.scan_calculation_functions import ScanCalculationFunctions
 from communication_interfaces.msg import DoubleMessage
 
@@ -59,7 +59,7 @@ class DispersionPattern(MovementPattern):
                 ('dispersion_allow_dynamic_max_range_setting', Parameter.Type.BOOL),
                 ('max_translational_velocity', Parameter.Type.DOUBLE),
                 ('max_rotational_velocity', Parameter.Type.DOUBLE),
-                ('lidar_config', None)
+                ('lidar_config', None, ParameterDescriptor(dynamic_typing=True))
             ])
 
         self.scan_subscription = self.create_subscription(
@@ -93,10 +93,10 @@ class DispersionPattern(MovementPattern):
         self.param_max_rotational_velocity = self.get_parameter(
             "max_rotational_velocity").get_parameter_value().double_value
         # TODO replace magic number '3'
-        self.lidar_config = None
-        # self.lidar_config = self.get_parameter(
-        #     "lidar_config").get_parameter_value().double_value if self.get_parameter(
-        #     "lidar_config").get_parameter_value().type == 3 else None
+       # self.lidar_config = None
+        self.lidar_config = self.get_parameter(
+            "lidar_config").get_parameter_value().double_value if self.get_parameter(
+            "lidar_config").get_parameter_value().type == 3 else None
 
     def scan_callback(self, incoming_msg):
         """Call back if a new scan msg is available."""
