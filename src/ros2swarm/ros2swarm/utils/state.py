@@ -38,3 +38,4 @@ class State(Enum):
     SEARCH_WALL = 16
     TUNNEL_CORNER = 17
     CHAIN_NODE = 18
+    NEST = 19
